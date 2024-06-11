@@ -1,0 +1,16 @@
+services:
+  koseven:
+    env_file:
+      - .env
+    build:
+      context: ./resources/docker/dev/php-fpm
+#    image: kohanaworld/docker:travis-devel
+    container_name: ${COMPOSE_PROJECT_NAME}-php
+    hostname: ${COMPOSE_PROJECT_NAME}-php
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/
+      - ./public:/var/www/public
+    networks:
+      - default
+    command: ping localhost
