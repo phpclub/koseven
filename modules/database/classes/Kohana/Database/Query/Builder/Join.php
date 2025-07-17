@@ -131,8 +131,12 @@ class Kohana_Database_Query_Builder_Join extends Database_Query_Builder {
 				$conditions[] = $db->quote_column($c1).$op.' '.$db->quote_column($c2);
 			}
 
-			// Concat the conditions "... AND ..."
-			$sql .= ' ON ('.implode(' AND ', $conditions).')';
+			// If there are any conditions, add them to the SQL
+			if ( ! empty($conditions))
+			{
+				// Concat the conditions "... AND ..."
+				$sql .= ' ON ('.implode(' AND ', $conditions).')';
+			}
 		}
 
 		return $sql;
