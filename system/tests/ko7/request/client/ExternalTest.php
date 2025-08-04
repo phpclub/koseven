@@ -15,7 +15,7 @@
  */
 
 
-use Pagely\Component\HttpMock\PHPUnit\HttpMockTrait;
+use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 
 class KO7_Request_Client_ExternalTest extends Unittest_TestCase {
 

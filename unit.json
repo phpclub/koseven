@@ -1,0 +1,44 @@
+{
+  "listeners": {
+    "*:80": {
+      "pass": "routes"
+    },
+    "*:9090": {
+      "pass": "applications/prom"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": "!/index.php"
+      },
+      "action": {
+        "share": "/app/public$uri",
+        "fallback": {
+          "pass": "applications/xmis"
+        }
+      }
+    }
+  ],
+  "applications": {
+    "xmis": {
+      "type": "php",
+      "root": "/app/public/",
+      "script": "index.php",
+      "processes": {
+        "max": 12,
+        "spare": 4,
+        "idle_timeout": 30
+      }
+    },
+    "prom": {
+      "type": "php",
+      "root": "/app/public",
+      "script": "prometheus.php",
+      "group": "unitsock",
+      "environment": {
+        "control_socket": "/var/run/control.unit.sock"
+      }
+    }
+  }
+}

@@ -59,7 +59,9 @@ class KO7_Cache_FileTest extends KO7_CacheBasicMethodsTest {
 	public function test_ignore_delete_file()
 	{
 		$cache = $this->cache();
+		//var_dump($cache);
 		$config = KO7::$config->load('cache')->file;
+
 		$file = $config['cache_dir'].'/file_we_want_to_keep.cache';
 
 		// Lets pollute the cache folder

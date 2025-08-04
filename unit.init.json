@@ -1,0 +1,32 @@
+{
+  "listeners": {
+    "*:80": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": "!/index.php"
+      },
+      "action": {
+        "share": "/app/public$uri",
+        "fallback": {
+          "pass": "applications/xmis"
+        }
+      }
+    }
+  ],
+  "applications": {
+    "xmis": {
+      "type": "php",
+      "root": "/app/public/",
+      "script": "index.php",
+      "processes": {
+        "max": 12,
+        "spare": 4,
+        "idle_timeout": 30
+      }
+    }
+  }
+}

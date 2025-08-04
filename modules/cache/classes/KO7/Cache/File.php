@@ -275,6 +275,9 @@ class KO7_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function delete_all()
 	{
+		if (is_null($this->_cache_dir)) {
+			throw new Cache_Exception('Cache directory not set');
+		}
 		$this->_cache_dir_usable or $this->_check_cache_dir();
 
 		return $this->_delete_file($this->_cache_dir, TRUE);
