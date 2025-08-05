@@ -16,7 +16,7 @@
 class KO7_HTTP_Header extends ArrayObject {
 
 	// Default Accept-* quality value if none supplied
-	const DEFAULT_QUALITY = 1;
+	const int DEFAULT_QUALITY = 1;
 
 	/**
 	 * Parses an Accept(-*) header and detects the quality
@@ -35,7 +35,7 @@ class KO7_HTTP_Header extends ArrayObject {
 		{
 			$value = trim(str_replace(["\r", "\n"], '', $parts[$key]));
 
-			$pattern = '~\b(\;\s*+)?q\s*+=\s*+([.0-9]+)~';
+			$pattern = '~\b(;\s*+)?q\s*+=\s*+([.0-9]+)~';
 
 			// If there is no quality directive, return default
 			if ( ! preg_match($pattern, $value, $quality))
@@ -229,11 +229,12 @@ class KO7_HTTP_Header extends ArrayObject {
 	 *          $maxage = $cache_control['max-age'];
 	 *     }
 	 *
-	 * @param   array   $cache_control Array of headers
+	 * @param   string   $cache_control Comma seperated string?
 	 * @return  mixed
 	 */
 	public static function parse_cache_control($cache_control)
 	{
+		/** @var array $directives */
 		$directives = explode(',', strtolower($cache_control));
 
 		if ($directives === FALSE)
@@ -344,18 +345,19 @@ class KO7_HTTP_Header extends ArrayObject {
 	 *
 	 * @param   mixed   $index      index to set `$newval` to
 	 * @param   mixed   $newval     new value to set
-	 * @param   boolean $replace    replace existing value
-	 * @return  void
+	 * @param boolean $replace    replace existing value
 	 * @since   3.2.0
+	 * @todo Refactor call offsetSet  (void = broken unittest)
 	 */
-	public function offsetSet(mixed $index, mixed $newval, bool $replace = TRUE): void
+	#[Override] #[ReturnTypeWillChange]
+	public function offsetSet(mixed $index, mixed $newval, bool $replace = TRUE)
 	{
 		// Ensure the index is lowercase
 		$index = strtolower($index);
 
 		if ($replace OR ! $this->offsetExists($index))
 		{
-			parent::offsetSet($index, $newval);
+			return parent::offsetSet($index, $newval);
 		}
 
 		$current_value = $this->offsetGet($index);
@@ -369,7 +371,7 @@ class KO7_HTTP_Header extends ArrayObject {
 			$current_value = [$current_value, $newval];
 		}
 
-		parent::offsetSet($index, $current_value);
+		return parent::offsetSet($index, $current_value);
 	}
 
 	/**
@@ -393,9 +395,9 @@ class KO7_HTTP_Header extends ArrayObject {
 	 * @return  void
 	 * @since   3.2.0
 	 */
-	public function offsetUnset(mixed $index): void
+	public function offsetUnset($index)
 	{
-		parent::offsetUnset(strtolower($index));
+		return parent::offsetUnset(strtolower($index));
 	}
 
 	/**
