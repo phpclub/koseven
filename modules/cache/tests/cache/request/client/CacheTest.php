@@ -106,14 +106,15 @@ class KO7_Request_Client_CacheTest extends Unittest_TestCase {
 
 		$key = $request->client()->cache()->create_cache_key($request);
 
-		$cache_mock->expects($this->at(0))
+		$cache_mock->expects($this->exactly(2))
 			->method('set')
-			->with($this->stringEndsWith($key), $this->identicalTo(0));
-
-		$cache_mock->expects($this->at(1))
-			->method('set')
-			->with($this->identicalTo($key), $this->anything(), $this->identicalTo($lifetime))
-			->will($this->returnValue(TRUE));
+			->withConsecutive(
+			// 1st call – we write an “empty” marker for 0 sec
+				[$this->stringEndsWith($key), $this->identicalTo(0)],
+				//2nd call – the cache itself with TTL
+				[$this->identicalTo($key), $this->anything(), $this->identicalTo($lifetime)]
+			)
+			->willReturnOnConsecutiveCalls(true, true);
 
 		$this->assertTrue(
 			$request->client()->cache()

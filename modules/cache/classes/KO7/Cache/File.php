@@ -57,14 +57,14 @@ class KO7_Cache_File extends Cache implements Cache_GarbageCollect {
 	}
 
 	/**
-	 * @var  string   the caching directory
+	 * @var  SplFileInfo   the caching directory
 	 */
-	protected $_cache_dir;
+	protected SplFileInfo $_cache_dir;
 
 	/**
 	 * @var  boolean  does the cache directory exists and writeable
 	 */
-	protected $_cache_dir_usable = FALSE;
+	protected bool $_cache_dir_usable = FALSE;
 
 	/**
 	 * Check that the cache directory exists and writeable. Attempts to create
@@ -275,12 +275,12 @@ class KO7_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function delete_all()
 	{
-		if (is_null($this->_cache_dir)) {
-			throw new Cache_Exception('Cache directory not set');
-		}
 		$this->_cache_dir_usable or $this->_check_cache_dir();
 
-		return $this->_delete_file($this->_cache_dir, TRUE);
+		if (isset($this->_cache_dir)) {
+			return $this->_delete_file($this->_cache_dir, TRUE);
+		}
+		return false;
 	}
 
 	/**
@@ -310,7 +310,7 @@ class KO7_Cache_File extends Cache implements Cache_GarbageCollect {
 	 * @return  boolean
 	 * @throws  Cache_Exception
 	 */
-	protected function _delete_file(SplFileInfo $file, $retain_parent_directory = FALSE, $ignore_errors = FALSE, $only_expired = FALSE)
+	protected function _delete_file(SplFileInfo $file, $retain_parent_directory = FALSE, $ignore_errors = FALSE, $only_expired = FALSE): bool
 	{
 		// Allow graceful error handling
 		try
@@ -421,6 +421,7 @@ class KO7_Cache_File extends Cache implements Cache_GarbageCollect {
 			// Throw exception
 			throw $e;
 		}
+		return false;
 	}
 
 	/**
