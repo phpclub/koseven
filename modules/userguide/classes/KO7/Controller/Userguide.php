@@ -103,6 +103,9 @@ abstract class KO7_Controller_Userguide extends Controller_Template {
 		$module = $this->request->param('module');
 		$page = $this->request->param('page');
 
+		if (is_null($page))
+			$page = 'index';
+
 		// Trim trailing slash
 		$page = rtrim($page, '/');
 

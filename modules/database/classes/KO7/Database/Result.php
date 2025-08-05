@@ -207,7 +207,7 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 * @return  integer
 	 */
-	public function count()
+	public function count(): int
 	{
 		return $this->_total_rows;
 	}
@@ -223,7 +223,7 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 * @param   int     $offset
 	 * @return  boolean
 	 */
-	public function offsetExists($offset)
+	public function offsetExists(mixed $offset): bool
 	{
 		return ($offset >= 0 AND $offset < $this->_total_rows);
 	}
@@ -236,7 +236,7 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 * @param   int     $offset
 	 * @return  mixed
 	 */
-	public function offsetGet($offset)
+	public function offsetGet(mixed $offset): mixed
 	{
 		if ( ! $this->seek($offset))
 			return NULL;
@@ -249,12 +249,12 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 * [!!] You cannot modify a database result.
 	 *
-	 * @param   int     $offset
+	 * @param   mixed   $offset
 	 * @param   mixed   $value
 	 * @return  void
 	 * @throws  KO7_Exception
 	 */
-	final public function offsetSet($offset, $value)
+	final public function offsetSet(mixed $offset, mixed $value): void
 	{
 		throw new KO7_Exception('Database results are read-only');
 	}
@@ -268,7 +268,7 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 * @return  void
 	 * @throws  KO7_Exception
 	 */
-	final public function offsetUnset($offset)
+	final public function offsetUnset(mixed $offset): void
 	{
 		throw new KO7_Exception('Database results are read-only');
 	}
@@ -280,7 +280,7 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 * @return  integer
 	 */
-	public function key()
+	public function key(): mixed
 	{
 		return $this->_current_row;
 	}
@@ -290,12 +290,11 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 *     next($result);
 	 *
-	 * @return  $this
+	 * @return  void
 	 */
-	public function next()
+	public function next(): void
 	{
 		++$this->_current_row;
-		return $this;
 	}
 
 	/**
@@ -303,9 +302,9 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 *     prev($result);
 	 *
-	 * @return  $this
+	 * @return  mixed
 	 */
-	public function prev()
+	public function prev(): mixed
 	{
 		--$this->_current_row;
 		return $this;
@@ -316,12 +315,11 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 *     rewind($result);
 	 *
-	 * @return  $this
+	 * @return  void
 	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->_current_row = 0;
-		return $this;
 	}
 
 	/**
@@ -331,7 +329,7 @@ abstract class KO7_Database_Result implements Countable, Iterator, SeekableItera
 	 *
 	 * @return  boolean
 	 */
-	public function valid()
+	public function valid(): bool
 	{
 		return $this->offsetExists($this->_current_row);
 	}

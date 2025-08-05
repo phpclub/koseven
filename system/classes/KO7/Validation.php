@@ -61,7 +61,7 @@ class KO7_Validation implements ArrayAccess {
 	 * @param   mixed    $value     value to set
 	 * @return  void
 	 */
-	public function offsetSet($offset, $value)
+	public function offsetSet(mixed $offset, mixed $value): void
 	{
 		throw new KO7_Exception('Validation objects are read-only.');
 	}
@@ -73,7 +73,7 @@ class KO7_Validation implements ArrayAccess {
 	 * @param   string  $offset key to check
 	 * @return  bool    whether the key is set
 	 */
-	public function offsetExists($offset)
+	public function offsetExists(mixed $offset): bool
 	{
 		return isset($this->_data[$offset]);
 	}
@@ -86,7 +86,7 @@ class KO7_Validation implements ArrayAccess {
 	 * @param   string  $offset key to unset
 	 * @return  void
 	 */
-	public function offsetUnset($offset)
+	public function offsetUnset(mixed $offset): void
 	{
 		throw new KO7_Exception('Validation objects are read-only.');
 	}
@@ -98,7 +98,7 @@ class KO7_Validation implements ArrayAccess {
 	 * @param   string  $offset key to return
 	 * @return  mixed   value from array
 	 */
-	public function offsetGet($offset)
+	public function offsetGet(mixed $offset): mixed
 	{
 		return $this->_data[$offset];
 	}

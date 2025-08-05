@@ -510,8 +510,10 @@ class KO7_Route {
 	 */
 	public function uri(array $params = NULL)
 	{
-		if ($params)
+		if ( ! is_null($params) ) // fix for php 8.3 - rawurlencode doesn't accept null values
 		{
+			$params = array_filter($params); // filter empty array items - rawurlencode doesn't accept null values
+
 			// @issue #4079 rawurlencode parameters
 			$params = array_map('rawurlencode', $params);
 			// decode slashes back, see Apache docs about AllowEncodedSlashes and AcceptPathInfo

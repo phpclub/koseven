@@ -122,11 +122,11 @@ class KO7_Config_Group extends ArrayObject {
 	 * @param string $key   The key of the config item we're changing
 	 * @param mixed  $value The new array value
 	 */
-	public function offsetSet($key, $value)
+	public function offsetSet($key, $value): void
 	{
 		$this->_parent_instance->_write_config($this->_group_name, $key, $value);
 
-		return parent::offsetSet($key, $value);
+		parent::offsetSet($key, $value);
 	}
 
 }
