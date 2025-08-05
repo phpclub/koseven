@@ -17,7 +17,7 @@ return [
 			'description' => 'Documentation for KO7 core/system.',
 
 			// Copyright message, shown in the footer for this module
-			'copyright' => '&copy; 2008–2017 Koseven Team',
+			'copyright' => '&copy; 2008–2024 Koseven Team',
 		],
 	],
 

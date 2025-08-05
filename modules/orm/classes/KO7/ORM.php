@@ -29,6 +29,18 @@ class KO7_ORM extends Model implements Serializable {
 	protected static $_init_cache = [];
 
 	/**
+	 * Implement __serialize() for PHP 8.1 deprecation warning
+	 * @return array
+	 */
+	public function __serialize(): array {}
+
+	/**
+	 * Implement __unserialize() for PHP 8.1 deprecation warning
+	 * @return array
+	 */
+	public function __unserialize(array $data): void {}
+
+	/**
 	 * Creates and returns a new model.
 	 * Model name must be passed with its' original casing, e.g.
 	 *
@@ -240,7 +252,7 @@ class KO7_ORM extends Model implements Serializable {
 
 	/**
 	 * The message filename used for validation errors. Defaults to `ORM::$_object_name`.
-	 * 
+	 *
 	 * @var string
 	 */
 	protected $_errors_filename;
@@ -414,7 +426,8 @@ class KO7_ORM extends Model implements Serializable {
 		// Create the behaviors classes
 		foreach ($this->behaviors() as $behavior => $behavior_config)
 		{
-			$this->_behaviors[] = ORM_Behavior::factory($behavior, $behavior_config);
+			if ( ! is_object($behavior_config) )
+				$this->_behaviors[$behavior] = ORM_Behavior::factory($behavior, $behavior_config);
 		}
 	}
 
@@ -569,7 +582,7 @@ class KO7_ORM extends Model implements Serializable {
 	 *
 	 * @return string
 	 */
-	public function serialize()
+	public function serialize(): ?string
 	{
 		// Store only information about the object
 		foreach (['_primary_key_value', '_object', '_changed', '_loaded', '_saved', '_sorting', '_original_values'] as $var)
@@ -612,7 +625,7 @@ class KO7_ORM extends Model implements Serializable {
 	 * @param string $data String for unserialization
 	 * @return  void
 	 */
-	public function unserialize($data)
+	public function unserialize($data): void
 	{
 		// Initialize model
 		$this->_initialize();
@@ -1323,7 +1336,7 @@ class KO7_ORM extends Model implements Serializable {
 	 */
 	public function behaviors()
 	{
-		return [];
+		return $this->_behaviors;
 	}
 
 	/**
@@ -2078,7 +2091,7 @@ class KO7_ORM extends Model implements Serializable {
 
 	/**
 	 * Returns object properties.
-	 
+
 	 * @return array
 	 */
 	public function object()
@@ -2596,12 +2609,12 @@ class KO7_ORM extends Model implements Serializable {
 	public function unique($field, $value, $match_case = FALSE)
 	{
 		$model = ORM::factory($this->object_name());
-		
+
 		if ($match_case)
 			$model->where(DB::expr('binary '.$field), '=', DB::expr('binary \''.$value.'\''));
 		else
 			$model->where($field, '=', $value);
-		
+
 		$model = $model->find();
 
 		if ($this->loaded())

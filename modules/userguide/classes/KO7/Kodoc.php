@@ -335,7 +335,7 @@ class KO7_Kodoc {
 			}
 		}
 
-		$comment = trim($comment, "\n");
+		$comment = ( ! is_null($comment) ) ? trim($comment, "\n") : '';
 
 		if ($comment AND $html)
 		{
