@@ -12,20 +12,20 @@
       "action": {
         "share": "/app/public$uri",
         "fallback": {
-          "pass": "applications/xmis"
+          "pass": "applications/koseven"
         }
       }
     }
   ],
   "applications": {
-    "xmis": {
+    "koseven": {
       "type": "php",
       "root": "/app/public/",
       "script": "index.php",
       "processes": {
-        "max": 12,
-        "spare": 4,
-        "idle_timeout": 30
+        "max": 10,
+        "spare": 1,
+        "idle_timeout": 60
       }
     }
   }
