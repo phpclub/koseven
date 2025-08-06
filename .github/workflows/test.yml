@@ -18,4 +18,4 @@ jobs:
         run: docker exec unittest /bin/sh -c "service redis-server start; cd /tmp/koseven; update-alternatives --set php /usr/bin/php8.4; composer install"
 
       - name: Run Koseven Unittest(s)
-        run: docker exec unittest /bin/sh -c "cd /tmp/koseven; php vendor/bin/phpunit"
+        run: docker exec unittest /bin/sh -c "mv /etc/php/8.4/cli/conf.d/20-xdebug.ini /etc/php/8.4/cli/conf.d/20-xdebug.ini.disabled; cd /tmp/koseven; php vendor/bin/phpunit"
