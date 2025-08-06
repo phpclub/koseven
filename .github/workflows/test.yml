@@ -12,7 +12,7 @@ jobs:
         run: docker pull kohanaworld/docker:travis-devel-8.4
 
       - name: Mount Directories and run Docker-Machine
-        run: docker run -dtP --name unittest -v /home/runner/work/koseven/koseven:/tmp/koseven/ koseven/docker:travis-devel
+        run: docker run -dtP --name unittest -v /home/runner/work/koseven/koseven:/tmp/koseven/ kohanaworld/docker:travis-devel-8.4
 
       - name: Install composer dependencies
         run: docker exec unittest /bin/sh -c "service redis-server start; cd /tmp/koseven; composer install"
