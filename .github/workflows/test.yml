@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Download current Docker-Image
-        run: docker pull koseven/docker:travis-devel
+        run: docker pull koseven/docker:travis-devel-8.4
 
       - name: Mount Directories and run Docker-Machine
         run: docker run -dtP --name unittest -v /home/runner/work/koseven/koseven:/tmp/koseven/ koseven/docker:travis-devel
