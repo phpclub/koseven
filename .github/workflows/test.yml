@@ -15,7 +15,7 @@ jobs:
         run: docker run -dtP --name unittest -v /home/runner/work/koseven/koseven:/tmp/koseven/ kohanaworld/docker:travis-devel-8.4
 
       - name: Install composer dependencies
-        run: docker exec unittest /bin/sh -c "service redis-server start; cd /tmp/koseven; composer install"
+        run: docker exec unittest /bin/sh -c "service redis-server start; cd /tmp/koseven; update-alternatives --set php /usr/bin/php8.4; composer install"
 
       - name: Run Koseven Unittest(s)
         run: docker exec unittest /bin/sh -c "cd /tmp/koseven; php vendor/bin/phpunit"
