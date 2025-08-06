@@ -1,7 +1,7 @@
 [![Koseven Logo](https://i.imgur.com/2CeT8JL.png)](https://koseven.dev/)
 
 [![Latest Stable Version](https://poser.pugx.org/koseven/koseven/v/stable)](https://packagist.org/packages/koseven/koseven)
-[![Build Status](https://action-badges.now.sh/koseven/koseven?workflow=test)](https://github.com/koseven/koseven/actions)
+[![Koseven](https://github.com/phpclub/koseven/actions/workflows/test.yml/badge.svg)](https://github.com/phpclub/koseven/actions/workflows/test.yml)
 [![License](https://poser.pugx.org/koseven/koseven/license.svg)](https://packagist.org/packages/koseven/koseven)
 [![Github Issues](https://img.shields.io/github/issues/koseven/koseven.svg)](https://github.com/koseven/koseven/issues)
 
